@@ -3,3 +3,9 @@
   aspect-ratio: 1/1;
   border-radius: 50%;
 }
+
+@media screen and (max-width: 768px){
+  .profile__avatar{
+    align-self: center;
+  }
+}
