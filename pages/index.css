@@ -13,3 +13,15 @@
 @import url("../blocks/profile/__two-columns/profile__two-columns.css");
 @import url("../blocks/profile/__plus-button/profile__plus-button.css");
 @import url("../blocks/blackout/blackout.css");
+@import url("../blocks/elements/elements.css");
+@import url("../blocks/element/element.css");
+@import url("../blocks/element/__img/element__img.css");
+@import url("../blocks/element/__name-like/element__name-like.css");
+@import url("../blocks/element/__name/element__name.css");
+@import url("../blocks/element/__like/element__like.css");
+@import url("../blocks/element/__like/_heart/element__like_heart_white.css");
+@import url("../blocks/element/__img/_background/element__img_background_karachaevsk.css");
+@import url("../blocks/element/__img/_background/element__img_background_elbrus.css");
+@import url("../blocks/element/__img/_background/element__img_background_dombay.css");
+@import url("../blocks/footer/footer.css");
+@import url("../blocks/footer/__copyright/footer__copyright.css");

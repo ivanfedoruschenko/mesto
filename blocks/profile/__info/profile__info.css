@@ -1,6 +1,6 @@
 .profile__info{
   color: white;
-  margin: 0;
+  margin: 16px 0 0;
   font-weight: 400;
   font-size: 18px;
   line-height: 22px;
@@ -9,8 +9,8 @@
 @media screen and (max-width: 768px){
   .profile__info{
     font-size: 14px;
-    line-height: 17px;
+    line-height: 14px;
     text-align: center;
-    margin: 0 0 36px;
+    margin: 14px 0 36px;
   }
 }
