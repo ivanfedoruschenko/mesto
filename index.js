@@ -11,15 +11,11 @@
   let popupButton = formElement.querySelector(".popup__button")
 
   function popupOpen () {
-    if(editButton) {
       popup.classList.add('popup_opened')
-    }
   }
 
   function popupClose () {
-    if(cross || popupButton){
       popup.classList.remove('popup_opened')
-    }
   }
 
   editButton.addEventListener("click",popupOpen);
@@ -28,10 +24,7 @@
 
 
   function handleFormSubmit (evt) {
-    evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-    // Так мы можем определить свою логику отправки.
-    // О том, как это делать, расскажем позже.
-
+    evt.preventDefault();
 
     let profileName = document.querySelector('.profile__name');
     let profileInfo = document.querySelector(".profile__info");
