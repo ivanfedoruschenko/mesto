@@ -6,7 +6,6 @@
 @media screen and (max-width: 768px){
   .profile__two-columns{
     justify-content: center;
-    flex-direction: column;
     max-width: 282px;
     align-self: center;
   }

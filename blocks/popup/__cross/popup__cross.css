@@ -1,0 +1,19 @@
+.popup__cross{
+  position: fixed;
+  top: calc(50% - 390px/2);
+  left: calc(50% + 430px/2);
+  background-image: url("../../../images/popup__cross.png");
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  background-size: cover;
+}
+
+@media screen and (max-width: 768px){
+  .popup__cross{
+    width: 20px;
+    height: 20px;
+    top: calc(50% - 378px/2);
+    left: calc(50% + 242px/2);
+  }
+}
