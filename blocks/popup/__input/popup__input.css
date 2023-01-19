@@ -1,6 +1,6 @@
-.popup__info{
+.popup__input{
   display: block;
-  margin: 0 auto 48px;
+  margin: 0 auto;
   width: 358px;
   height: 27px;
   font-family: inherit;
@@ -10,11 +10,11 @@
   outline: none;
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+
 }
 
 @media screen and (max-width: 768px) {
-  .popup__info{
+  .popup__input{
     width: 238px;
-    margin: 0 auto 45px;
   }
 }
