@@ -10,7 +10,8 @@
   line-height: 22px;
   text-align: center;
   cursor: pointer;
-  margin: 0 0 25px;
+  margin: 48px 0 37px;
+  box-sizing: border-box;
 }
 
 .popup__button:hover{
@@ -23,5 +24,7 @@
     line-height: 17px;
     width: 238px;
     height: 46px;
+    margin-top: 45px;
+    margin-bottom: 25px;
   }
 }

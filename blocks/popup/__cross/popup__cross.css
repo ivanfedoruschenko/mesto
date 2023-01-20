@@ -1,5 +1,6 @@
 .popup__cross{
   position: absolute;
+  background-color: rgba(0, 0, 0, 0);
   background-image: url("../../../images/popup__cross.png");
   width: 32px;
   height: 32px;
@@ -7,8 +8,9 @@
   right: -40px;
   cursor: pointer;
   background-size: cover;
-  background-color: black;
   z-index: 3;
+  border: none;
+
 }
 
 @media screen and (max-width: 768px){
