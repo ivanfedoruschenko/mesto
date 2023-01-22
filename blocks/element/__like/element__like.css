@@ -1,12 +1,12 @@
 .element__like{
-  background-image: url("../../../images/element__like_heart_white.png");
+  background-color: rgba(0, 0, 0, 0);
+  background-image: url("../../../images/element__like_disabled.png");
   margin: 0;
   width: 22px;
   height: 19px;
   background-size: cover;
   align-self: center;
   border: none;
-  background-color: rgba(0, 0, 0, 0);
 }
 
 .element__like:hover{
