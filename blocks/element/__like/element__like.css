@@ -7,6 +7,7 @@
   background-size: cover;
   align-self: center;
   border: none;
+  box-sizing: border-box;
 }
 
 .element__like:hover{
