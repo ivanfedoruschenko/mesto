@@ -9,8 +9,8 @@
   const cardTemplate = document.querySelector("#card").content;
   const elements = document.querySelector(".elements");
   const createBtn = document.querySelector(".profile__add-button");
-  const popupCreate = document.querySelector(".popup__create-element");
-  const crossCreate = document.querySelector(".popup_cross_create_close");
+  const popupCreate = document.querySelector(".popup_create-element");
+  const crossCreate = document.querySelector(".popup__cross_create_close");
   const popupImg = document.querySelector(".popup_open-img");
   const imgName = document.querySelector(".popup__img-name");
   const imgFullSize = document.querySelector(".popup__img_full-size");
@@ -23,22 +23,22 @@
     popup.classList.add('popup_opened')
     nameInput.value = profileName.textContent;
     jobInput.value = profileInfo.textContent;
-  };
+  }
 
   function popupClose () {
     popup.classList.remove('popup_opened')  //функция закрытия попапа редактирования профиля
-  };
+  }
 
   function handleFormSubmit (evt) { //функция редактирования профиля
     evt.preventDefault();
     profileName.textContent = nameInput.value;
     profileInfo.textContent = jobInput.value;
     popupClose()
-  };
+  }
 
   const addOpen = () =>{  //функция открытия попапа для добавления карточки
     popupCreate.classList.add('popup_opened')
-  };
+  }
 
   const imgOpen = (e) => {  //функция открытия попапа с увеличенной картинкой
     const thisElement = e.target.closest(".element")
