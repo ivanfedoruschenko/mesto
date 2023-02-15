@@ -23,9 +23,9 @@
             <p class="profile__info">Исследователь океана</p>
           </div>
         </div>
-        <button type="button" class="blackout profile__edit-button"><img src="./images/profile__edit.png" class="profile__edit-pencil" alt="Карандаш"></button>
+        <button type="button" class="blackout profile__edit-button profile_button_open"><img src="./images/profile__edit.png" class="profile__edit-pencil" alt="Карандаш"></button>
       </div>
-      <button type="button" class="blackout profile__add-button"><img src="./images/profile__plus.png" class="profile__plus-button" alt="Плюс"></button>
+      <button type="button" class="blackout profile__add-button profile_button_open"><img src="./images/profile__plus.png" class="profile__plus-button" alt="Плюс"></button>
     </section>
 
     <section class="elements">
@@ -48,9 +48,9 @@
     <p class="footer__copyright">&copy;2022 Mesto Russia</p>
   </footer>
 
-  <div class="popup">
+  <div class="popup popup_edit_profile">
     <div class="popup__container popup__container_width">
-      <button type="button" class="blackout popup__cross"></button>
+      <button type="button" class="blackout popup__close"></button>
       <h2 class="popup__title">Редактировать профиль</h2>
       <form class="popup__form" name="popup__form">
         <input type="text" placeholder="Введите свое имя" class="popup__input popup__input_type_name" name="popup__name" value="">
@@ -60,9 +60,9 @@
     </div>
   </div>
 
-  <div class="popup popup_create-element">
+  <div class="popup popup_create_card">
     <div class="popup__container popup__container_width popup__container_create">
-      <button type="button" class="blackout popup__cross popup__cross_create_close"></button>
+      <button type="button" class="blackout popup__close"></button>
       <h2 class="popup__title">Новое место</h2>
       <form class="popup__form" name="popup__form">
         <input type="text" placeholder="Название" class="popup__input  popup__input_type_title" name="popup__name" value="">
@@ -75,11 +75,12 @@
   <div class="popup popup_open-img">
     <div class="popup__container">
       <img class="popup__img popup__img_full-size" src="#" alt="">
-      <button type="button" class="blackout popup__cross popup__cross_img_close"></button>
+      <button type="button" class="blackout popup__close"></button>
       <p class="popup__img-name"></p>
     </div>
   </div>
 
-<script src="scripts/index.js"></script>
+  <script src="scripts/cards.js"></script>
+  <script src="scripts/index.js"></script>
 </body>
 </html>

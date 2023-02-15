@@ -1,4 +1,4 @@
-.popup__cross{
+.popup__close{
   position: absolute;
   background-color: rgba(0, 0, 0, 0);
   background-image: url("../../../images/popup__cross.png");
@@ -13,7 +13,7 @@
 }
 
 @media screen and (max-width: 768px){
-  .popup__cross{
+  .popup__close{
     width: 20px;
     height: 20px;
     top: -36px;
