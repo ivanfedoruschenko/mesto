@@ -1,7 +1,7 @@
   const popupEditProfile = document.querySelector(".popup_edit_profile");
-  const formElement = popupEditProfile.querySelector(".popup__container");
-  const nameInput = formElement.querySelector(".popup__input_type_name");
-  const jobInput = formElement.querySelector(".popup__input_type_info");
+  const formEditProfile = popupEditProfile.querySelector(".popup__container");
+  const nameInput = formEditProfile.querySelector(".popup__input_type_name");
+  const jobInput = formEditProfile.querySelector(".popup__input_type_info");
   const buttonEditProfile = document.querySelector(".profile__edit-button");
   const profileName = document.querySelector('.profile__name');
   const profileInfo = document.querySelector(".profile__info");
@@ -17,6 +17,10 @@
   const buttonCreate = document.querySelector(".popup__container_create");
   const popups = document.querySelectorAll(".popup");
 
+  function togglePopup(popup){
+    popup.classList.toggle("popup_opened")
+  }
+
   popups.forEach((popup) => {
       popup.addEventListener("mousedown", (evt) =>{
         if(evt.target.classList.contains("popup_opened")){
@@ -28,12 +32,25 @@
       })
     }) //цикл для навешивания слушателя событий на все крестики в попапах
 
-  function togglePopup(popup){
-    popup.classList.toggle("popup_opened")
+  function closePopupEsc(evt){
+    const target = evt.target.closest(".popup")
+    if (evt.key === "Escape") {
+      togglePopup(target)
+    }
   }
 
-  function openPopupEditProfile () {  // функция открытия попапа редактирования профиля
-    togglePopup(popupEditProfile)
+  const openPopup = (popup) => {
+    popup.classList.add("popup_opened")
+    popup.addEventListener("keydown", closePopupEsc)
+  } // функция для открытия попапа и добавления слушателя события на инпуты
+
+  const closePopup = (popup) => {
+    popup.classList.remove("popup_opened")
+    popup.removeEventListener("keydown", closePopupEsc)
+  }// функция закрытия попапа и удаления слушателя с инпутов(вариант заменты цикла)
+
+    function openPopupEditProfile () {  // функция открытия попапа редактирования профиля
+    openPopup(popupEditProfile)
     nameInput.value = profileName.textContent;
     jobInput.value = profileInfo.textContent;
   }
@@ -42,11 +59,11 @@
     evt.preventDefault();
     profileName.textContent = nameInput.value;
     profileInfo.textContent = jobInput.value;
-    togglePopup(popupEditProfile)
+    closePopup(popupEditProfile)
   }
 
   const openCreateNewCard = () =>{
-    togglePopup(popupCreateCard);
+    openPopup(popupCreateCard);
   }
 
   const handleFullSizeImgOpen = (e) => {  //функция открытия попапа с увеличенной картинкой
@@ -106,4 +123,4 @@
   buttonCreate.addEventListener("submit", createNewCard);
   buttonAddCard.addEventListener("click", openCreateNewCard);
   buttonEditProfile.addEventListener("click",openPopupEditProfile);
-  formElement.addEventListener('submit', handleFormSubmitProfile);
+  formEditProfile.addEventListener('submit', handleFormSubmitProfile);
