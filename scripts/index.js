@@ -15,56 +15,50 @@
   const newElementTitle = document.querySelector(".popup__input_type_title");
   const newElementLink = document.querySelector(".popup__input_type_link");
   const buttonCreate = document.querySelector(".popup__container_create");
-  const popups = document.querySelectorAll(".popup");
-
-  function togglePopup(popup){
-    popup.classList.toggle("popup_opened")
-  }
-
-  popups.forEach((popup) => {
-      popup.addEventListener("mousedown", (evt) =>{
-        if(evt.target.classList.contains("popup_opened")){
-          togglePopup(popup)
-        }
-        if(evt.target.classList.contains("popup__close")){
-          togglePopup(popup)
-        }
-      })
-    }) //цикл для навешивания слушателя событий на все крестики в попапах
 
   function closePopupEsc(evt){
-    const target = evt.target.closest(".popup")
+    const target = document.querySelector(".popup_opened")
     if (evt.key === "Escape") {
-      togglePopup(target)
+      target.classList.remove("popup_opened")
+      document.removeEventListener("keydown", closePopupEsc)
     }
   }
 
+  const closePopup = (evt) => {
+    const target = document.querySelector(".popup_opened")
+    if (evt.target.classList.contains("popup_opened") || evt.target.classList.contains("popup__close") || evt.target.classList.contains("popup__button")){
+      target.classList.remove("popup_opened")
+      document.removeEventListener("keydown", closePopupEsc)
+      evt.target.removeEventListener("mousedown", closePopup)
+    }
+  }// функция закрытия попапа и удаления слушателей событий
+
   const openPopup = (popup) => {
     popup.classList.add("popup_opened")
-    popup.addEventListener("keydown", closePopupEsc)
-  } // функция для открытия попапа и добавления слушателя события на инпуты
+    document.addEventListener("keydown", closePopupEsc)
+    popup.addEventListener("mousedown", closePopup)
+  } // функция для открытия попапа и добавления слушателей событий
 
-  const closePopup = (popup) => {
-    popup.classList.remove("popup_opened")
-    popup.removeEventListener("keydown", closePopupEsc)
-  }// функция закрытия попапа и удаления слушателя с инпутов(вариант заменты цикла)
 
-    function openPopupEditProfile () {  // функция открытия попапа редактирования профиля
+  function openPopupEditProfile () {  // функция открытия попапа редактирования профиля
     openPopup(popupEditProfile)
     nameInput.value = profileName.textContent;
     jobInput.value = profileInfo.textContent;
+  }
+
+  function openPopupAddCard () {
+    openPopup(popupCreateCard)
+    newElementTitle.value = "";
+    newElementLink.value = "";
   }
 
   function handleFormSubmitProfile (evt) { //функция редактирования профиля
     evt.preventDefault();
     profileName.textContent = nameInput.value;
     profileInfo.textContent = jobInput.value;
-    closePopup(popupEditProfile)
+    closePopup()
   }
 
-  const openCreateNewCard = () =>{
-    openPopup(popupCreateCard);
-  }
 
   const handleFullSizeImgOpen = (e) => {  //функция открытия попапа с увеличенной картинкой
     const thisElement = e.target.closest(".element")
@@ -73,7 +67,7 @@
     imgFullSize.src = thisImg.src;
     imgFullSize.alt = thisImg.alt;
     imgName.textContent = thisElementName.textContent;
-    togglePopup(popupFullSizeImg)
+    openPopup(popupFullSizeImg)
   };
 
   const handleLikeClick = (e) => { //функция для активации лайка
@@ -85,7 +79,7 @@
   };
 
   const createCards = (card) => { //функция клонирования содержимого темплейта и добавления активных элементов
-    const cardElement = cardTemplate.cloneNode(true); // Клонируем содержимое темплейта
+    const cardElement = cardTemplate.querySelector('.element').cloneNode(true); // Клонируем содержимое темплейта
     const newElementImg = cardElement.querySelector('.element__img') ;// наполняем содержимым
     newElementImg.src = card.link;
     newElementImg.alt = card.name;
@@ -117,10 +111,10 @@
     evt.preventDefault();
     const card = {name:newElementTitle.value,link:newElementLink.value}
     renderNewCard(cardsContainer,card)
-    openCreateNewCard()
+    closePopup()
   }
 
   buttonCreate.addEventListener("submit", createNewCard);
-  buttonAddCard.addEventListener("click", openCreateNewCard);
+  buttonAddCard.addEventListener("click", openPopupAddCard);
   buttonEditProfile.addEventListener("click",openPopupEditProfile);
   formEditProfile.addEventListener('submit', handleFormSubmitProfile);
