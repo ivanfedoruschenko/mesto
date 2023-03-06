@@ -15,30 +15,35 @@
   const newElementTitle = document.querySelector(".popup__input_type_title");
   const newElementLink = document.querySelector(".popup__input_type_link");
   const buttonCreate = document.querySelector(".popup__container_create");
+  const popups = document.querySelectorAll(".popup")
 
   function closePopupEsc(evt){
     const target = document.querySelector(".popup_opened")
     if (evt.key === "Escape") {
-      target.classList.remove("popup_opened")
-      document.removeEventListener("keydown", closePopupEsc)
+      closePopup(target)
     }
   }
 
-  const closePopup = (evt) => {
-    const target = document.querySelector(".popup_opened")
-    if (evt.target.classList.contains("popup_opened") || evt.target.classList.contains("popup__close") || evt.target.classList.contains("popup__button")){
-      target.classList.remove("popup_opened")
-      document.removeEventListener("keydown", closePopupEsc)
-      evt.target.removeEventListener("mousedown", closePopup)
-    }
+  const closePopup = (popup) => {
+    popup.classList.remove("popup_opened")
+    document.removeEventListener("keydown", closePopupEsc)
   }// функция закрытия попапа и удаления слушателей событий
 
   const openPopup = (popup) => {
     popup.classList.add("popup_opened")
     document.addEventListener("keydown", closePopupEsc)
-    popup.addEventListener("mousedown", closePopup)
   } // функция для открытия попапа и добавления слушателей событий
 
+  popups.forEach((popup) => {
+    popup.addEventListener("mousedown", (evt) =>{
+      if(evt.target.classList.contains("popup_opened")){
+        closePopup(popup)
+      }
+      if(evt.target.classList.contains("popup__close")){
+        closePopup(popup)
+      }
+    })
+  }) //цикл для навешивания слушателя событий на все крестики в попапах
 
   function openPopupEditProfile () {  // функция открытия попапа редактирования профиля
     openPopup(popupEditProfile)
@@ -48,15 +53,14 @@
 
   function openPopupAddCard () {
     openPopup(popupCreateCard)
-    newElementTitle.value = "";
-    newElementLink.value = "";
+    document.querySelector("#form_create_card").reset()
   }
 
   function handleFormSubmitProfile (evt) { //функция редактирования профиля
     evt.preventDefault();
     profileName.textContent = nameInput.value;
     profileInfo.textContent = jobInput.value;
-    closePopup()
+    closePopup(popupEditProfile)
   }
 
 
@@ -111,7 +115,7 @@
     evt.preventDefault();
     const card = {name:newElementTitle.value,link:newElementLink.value}
     renderNewCard(cardsContainer,card)
-    closePopup()
+    closePopup(popupCreateCard)
   }
 
   buttonCreate.addEventListener("submit", createNewCard);
