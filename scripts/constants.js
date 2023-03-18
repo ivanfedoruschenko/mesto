@@ -16,6 +16,43 @@ const newElementTitle = document.querySelector(".popup__input_type_title");
 const newElementLink = document.querySelector(".popup__input_type_link");
 const buttonCreate = document.querySelector(".popup__container_create");
 const popups = document.querySelectorAll(".popup")
+const formCreateCard = document.querySelector("#form_create_card")
+
+const initialCards = [
+  {
+    title: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    title: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    title: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    title: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    title: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    title: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
+
+const parameters = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_type_inactive',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__input-error_type_active'
+}
 
 export {popupEditProfile,
   formEditProfile,
@@ -34,5 +71,5 @@ export {popupEditProfile,
   newElementTitle,
   newElementLink,
   buttonCreate,
-  popups,
+  popups, initialCards, formCreateCard,parameters
 }

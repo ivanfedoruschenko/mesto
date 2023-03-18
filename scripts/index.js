@@ -1,27 +1,30 @@
-import {popupEditProfile,
-  formEditProfile,
-  nameInput,
-  jobInput,
-  buttonEditProfile,
-  profileName,
-  profileInfo,
-  cardTemplate,
-  cardsContainer,
+import {
   buttonAddCard,
-  popupCreateCard,
-  newElementTitle,
-  newElementLink,
   buttonCreate,
+  buttonEditProfile,
+  cardsContainer,
+  cardTemplate,
+  formCreateCard,
+  formEditProfile,
+  initialCards,
+  jobInput,
+  nameInput,
+  newElementLink,
+  newElementTitle,
+  parameters,
+  popupCreateCard,
+  popupEditProfile,
   popups,
+  profileInfo,
+  profileName
 } from "./constants.js"
-import {Card, initialCards} from "./cards.js";
-import {FormValidator, parameters,} from "./validate.js";
-
-const popup = Array.from(popups);
+import {Card} from "./Cards.js";
+import {FormValidator} from "./FormValidator.js";
 
 function closePopupEsc(evt){
-    const target = document.querySelector(".popup_opened")
+
     if (evt.key === "Escape") {
+      const target = document.querySelector(".popup_opened")
       closePopup(target)
     }
   }
@@ -49,13 +52,19 @@ function closePopupEsc(evt){
 
   function openPopupEditProfile () {  // функция открытия попапа редактирования профиля
     openPopup(popupEditProfile)
+    const popupElement = new FormValidator(parameters,popupEditProfile)
+    popupElement.enableValidation()
+    popupElement.resetValidation()
     nameInput.value = profileName.textContent;
     jobInput.value = profileInfo.textContent;
   }
 
   function openPopupAddCard () {
     openPopup(popupCreateCard)
-    document.querySelector("#form_create_card").reset()
+    const popupElement = new FormValidator(parameters,popupCreateCard)
+    popupElement.enableValidation()
+    popupElement.resetValidation()
+    formCreateCard.reset()
   }
 
   function handleFormSubmitProfile (evt) { //функция редактирования профиля
@@ -65,26 +74,20 @@ function closePopupEsc(evt){
     closePopup(popupEditProfile)
   }
 
+  function createCard(title,link) {
+    const card = new Card(title, link, cardTemplate);
+    return card.generateCard()
+  }
+
   initialCards.forEach((item) => { //функция рендеринга карточек
-    const card = new Card(item.title, item.link, cardTemplate);
-    const cardElement = card.generateCard()
-    cardsContainer.append(cardElement)
+    cardsContainer.append(createCard(item.title, item.link))
   });
 
   const createNewCard = (evt) => {
     evt.preventDefault();
-    const card = new Card(newElementTitle.value,newElementLink.value, cardTemplate)
-    const cardElement = card.generateCard()
-    cardsContainer.prepend(cardElement)
+    cardsContainer.prepend(createCard(newElementTitle.value,newElementLink.value))
     closePopup(popupCreateCard)
   }
-
-
-  popup.forEach((item) => {   // цикл валидации всех инпутов
-    const popupElement = new FormValidator(parameters,item)
-    popupElement.enableValidation()
-  })
-
 
   buttonCreate.addEventListener("submit", createNewCard);
   buttonAddCard.addEventListener("click", openPopupAddCard);
