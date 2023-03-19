@@ -1,14 +1,13 @@
 import {imgFullSize, imgName, popupFullSizeImg,initialCards} from "./constants.js";
 import {openPopup} from "./index.js";
 
-
-
 class Card {
   constructor(title,link,template) {
     this._title = title;
     this._link = link;
     this._template = template;
   }
+
   _getTemplate(){
     return this._template.querySelector('.element').cloneNode(true)
   }
