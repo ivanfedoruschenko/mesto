@@ -8,7 +8,7 @@ import {
   formEditProfile,
   initialCards,
   jobInput,
-  nameInput,
+  nameInput, newCard,
   newElementLink,
   newElementTitle,
   parameters,
@@ -75,18 +75,20 @@ function handleFormSubmitProfile (evt) { //функция редактирова
   closePopup(popupEditProfile)
 }
 
-function createCard(title,link) {
-  const card = new Card(title, link, cardTemplate);
+function createCard(cardData) {
+  const card = new Card(cardData.title, cardData.link, cardTemplate);
   return card.generateCard()
 }
 
 initialCards.forEach((item) => { //функция рендеринга карточек
-  cardsContainer.append(createCard(item.title, item.link))
+  cardsContainer.append(createCard(item))
 });
 
 const createNewCard = (evt) => {
   evt.preventDefault();
-  cardsContainer.prepend(createCard(newElementTitle.value,newElementLink.value))
+  newCard.title = newElementTitle.value;
+  newCard.link = newElementLink.value
+  cardsContainer.prepend(createCard(newCard))
   closePopup(popupCreateCard)
 }
 

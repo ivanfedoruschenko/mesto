@@ -1,4 +1,4 @@
-import {imgFullSize, imgName, popupFullSizeImg,initialCards} from "./constants.js";
+import {imgFullSize, imgName, popupFullSizeImg} from "./constants.js";
 import {openPopup} from "./index.js";
 
 class Card {
@@ -6,6 +6,8 @@ class Card {
     this._title = title;
     this._link = link;
     this._template = template;
+    this._element = this._getTemplate()
+    this._buttonLike = this._element.querySelector(".element__like");
   }
 
   _getTemplate(){
@@ -13,20 +15,17 @@ class Card {
   }
 
   generateCard() {
-    this._element = this._getTemplate()
-
     const newElementImg = this._element.querySelector('.element__img') ;// наполняем содержимым
     newElementImg.src = this._link;
     newElementImg.alt = this._title;
     const newElementName = this._element.querySelector('.element__name');
     newElementName.textContent = this._title;
     this._setEventListener()
-
     return this._element
   }
 
   _handleLikeClick() { //метод для активации лайка
-    this._element.querySelector(".element__like").classList.toggle('element__like_active');
+   this._buttonLike.classList.toggle('element__like_active');
 
   };
 
@@ -42,10 +41,10 @@ class Card {
   };
 
   _setEventListener(){
-    this._element.querySelector(".element__like").addEventListener("click", () => {this._handleLikeClick()}) //добавляем событие на кнопку лайка
+    this._buttonLike.addEventListener("click", () => {this._handleLikeClick()}) //добавляем событие на кнопку лайка
     this._element.querySelector(".element__trash").addEventListener("click", () => {this._handleCardDelete()}); //добавляем событие на кнопку корзины
     this._element.querySelector(".element__img").addEventListener("click", () =>{this._handleFullSizeImgOpen()})
   }
 }
 
-export {Card, initialCards}
+export {Card}

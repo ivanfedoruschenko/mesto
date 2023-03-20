@@ -45,10 +45,7 @@ class FormValidator {
   };
 
   enableValidation() {
-    const formList = Array.from(this._element.querySelectorAll(this._data.formSelector));
-    formList.forEach(() => {
-      this._setEventListeners();
-    });
+    this._setEventListeners();
   };
 
   _hasInvalidInput() {
@@ -76,4 +73,3 @@ class FormValidator {
 }
 
 export {FormValidator}
-

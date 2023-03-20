@@ -45,6 +45,8 @@ const initialCards = [
   }
 ];
 
+const newCard = {}
+
 const parameters = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
@@ -71,5 +73,9 @@ export {popupEditProfile,
   newElementTitle,
   newElementLink,
   buttonCreate,
-  popups, initialCards, formCreateCard,parameters
+  popups,
+  initialCards,
+  formCreateCard,
+  parameters,
+  newCard
 }
