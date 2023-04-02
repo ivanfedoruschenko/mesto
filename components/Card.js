@@ -1,10 +1,11 @@
-import {imgFullSize, imgName, popupFullSizeImg} from "./constants.js";
-import {openPopup} from "./index.js";
+import {imgFullSize, imgName, popupFullSizeImg} from "../utils/constants.js";
+import {openPopup} from "../scripts";
 
 class Card {
-  constructor(title,link,template) {
-    this._title = title;
-    this._link = link;
+  constructor({data,handleCardClick}, template) {
+    this._title = data.title;
+    this._link = data.link;
+    this._handleCardClick = handleCardClick
     this._template = template;
     this._element = this._getTemplate()
     this._buttonLike = this._element.querySelector(".element__like");
@@ -33,17 +34,10 @@ class Card {
     this._element.remove()
   };
 
-  _handleFullSizeImgOpen() {  //функция открытия попапа с увеличенной картинкой
-    imgFullSize.src = this._link;
-    imgFullSize.alt = this._title;
-    imgName.textContent = this._title;
-    openPopup(popupFullSizeImg)
-  };
-
   _setEventListener(){
     this._buttonLike.addEventListener("click", () => {this._handleLikeClick()}) //добавляем событие на кнопку лайка
     this._element.querySelector(".element__trash").addEventListener("click", () => {this._handleCardDelete()}); //добавляем событие на кнопку корзины
-    this._element.querySelector(".element__img").addEventListener("click", () =>{this._handleFullSizeImgOpen()})
+    this._element.querySelector(".element__img").addEventListener("click", () =>{this._handleCardClick()})
   }
 }
 

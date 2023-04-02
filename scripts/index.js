@@ -13,13 +13,15 @@ import {
   newElementTitle,
   parameters,
   popupCreateCard,
-  popupEditProfile,
+  popupEditProfile, popupFullSizeImg,
   popups,
   profileInfo,
   profileName
-} from "./constants.js"
-import {Card} from "./Card.js";
-import {FormValidator} from "./FormValidator.js";
+} from "../utils/constants.js"
+import Section from "../components/Section.js";
+import {Card} from "../components/Card.js";
+import {FormValidator} from "../components/FormValidator.js";
+import PopupWithImage from "../components/PopupWithImage.js";
 
 const popupEditProfileValidation = new FormValidator(parameters, popupEditProfile)
 popupEditProfileValidation.enableValidation()
@@ -75,26 +77,44 @@ function handleFormSubmitProfile (evt) { //функция редактирова
   closePopup(popupEditProfile)
 }
 
-function createCard(cardData) {
+/*function createCard(cardData) {
   const card = new Card(cardData.title, cardData.link, cardTemplate);
   return card.generateCard()
-}
+}*/
 
-initialCards.forEach((item) => { //функция рендеринга карточек
+/*initialCards.forEach((item) => { //функция рендеринга карточек
   cardsContainer.append(createCard(item))
-});
+});*/
 
-const createNewCard = (evt) => {
+/*const createNewCard = (evt) => {
   evt.preventDefault();
   newCard.title = newElementTitle.value;
   newCard.link = newElementLink.value
   cardsContainer.prepend(createCard(newCard))
   closePopup(popupCreateCard)
-}
+}*/
 
-buttonCreate.addEventListener("submit", createNewCard);
+const cardList = new Section({
+  data: initialCards,
+  renderer: (cardItem) => {
+    const card = new Card({cardItem,
+      handleCardClick: () =>{
+        const popupFullImg = new PopupWithImage(popupFullSizeImg, cardItem)
+        popupFullImg.open()
+      }},
+      cardTemplate);
+    const cardElement =card.generateCard()
+    cardList.addItem(cardElement)
+  }
+},".elements" )
+
+cardList.renderItems()
+
+/*buttonCreate.addEventListener("submit", createNewCard);*/
 buttonAddCard.addEventListener("click", openPopupAddCard);
 buttonEditProfile.addEventListener("click",openPopupEditProfile);
 formEditProfile.addEventListener('submit', handleFormSubmitProfile);
+
+
 
 export {openPopup}
