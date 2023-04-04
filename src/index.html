@@ -3,13 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./pages/index.css">
   <title>Mesto</title>
 </head>
 <body class="body">
 
   <header class="header">
-    <img src="./images/header__logo.svg" alt="Место" class="header__logo">
+    <img src="<%=require('./images/header__logo.svg')%>" alt="Место" class="header__logo">
   </header>
 
   <main class="main">
@@ -17,15 +16,15 @@
     <section class="profile">
       <div class="profile__two-columns">
         <div class="profile__container">
-          <img src="./images/profile__avatar.png" alt="Аватар" class="profile__avatar">
+          <img src="<%=require('./images/profile__avatar.png')%>" alt="Аватар" class="profile__avatar">
           <div class="profile__name-info">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
             <p class="profile__info">Исследователь океана</p>
           </div>
         </div>
-        <button type="button" class="blackout profile__edit-button"><img src="./images/profile__edit.png" class="profile__edit-pencil" alt="Карандаш"></button>
+        <button type="button" class="blackout profile__edit-button"><img src="<%=require('./images/profile__edit.png')%>" class="profile__edit-pencil" alt="Карандаш"></button>
       </div>
-      <button type="button" class="blackout profile__add-button"><img src="./images/profile__plus.png" class="profile__plus-button" alt="Плюс"></button>
+      <button type="button" class="blackout profile__add-button"><img src="<%=require('./images/profile__plus.png')%>" class="profile__plus-button" alt="Плюс"></button>
     </section>
 
     <section class="elements">
@@ -54,11 +53,11 @@
       <h2 class="popup__title">Редактировать профиль</h2>
       <form class="popup__form" name="popup__form" novalidate>
         <label class="popup__label">
-          <input id="name-edit-input" type="text" placeholder="Введите свое имя" class="popup__input popup__input_type_name" name="popup__name" value="" minlength="2" maxlength="40" required>
+          <input id="name-edit-input" type="text" placeholder="Введите свое имя" class="popup__input popup__input_type_name" name="name" value="" minlength="2" maxlength="40" required>
           <span class="name-edit-input-error popup__input-error"></span>
         </label>
         <label class="popup__label">
-          <input id="info-edit-input" type="text" placeholder="Укажите информацию о себе" class="popup__input popup__input_type_info" name="popup__info" minlength="2" maxlength="200" required>
+          <input id="info-edit-input" type="text" placeholder="Укажите информацию о себе" class="popup__input popup__input_type_info" name="info" minlength="2" maxlength="200" required>
           <span class="info-edit-input-error popup__input-error"></span>
         </label>
         <button type="submit" class="popup__button" name="popup__button">Сохранить</button>
@@ -72,11 +71,11 @@
       <h2 class="popup__title">Новое место</h2>
       <form id="form_create_card" class="popup__form" name="popup__form" novalidate>
         <label class="popup__label">
-          <input id="name-add-input" type="text" placeholder="Название" class="popup__input  popup__input_type_title" name="popup__name" value="" minlength="2" maxlength="30" required>
+          <input id="name-add-input" type="text" placeholder="Название" class="popup__input  popup__input_type_title" name="title" value="" minlength="2" maxlength="30" required>
           <span class="name-add-input-error popup__input-error"></span>
         </label>
         <label class="popup__label">
-          <input  id="url-add-input" type="url" placeholder="Ссылка на картинку" class="popup__input popup__input_type_link" name="popup__info" required>
+          <input  id="url-add-input" type="url" placeholder="Ссылка на картинку" class="popup__input popup__input_type_link" name="link" required>
           <span class="url-add-input-error popup__input-error"></span>
         </label>
         <button type="submit" class="popup__button popup__button_create" name="popup__button">Создать</button>
@@ -91,6 +90,5 @@
       <p class="popup__img-name"></p>
     </div>
   </div>
-  <script type="module" src="scripts/index.js"></script>
 </body>
 </html>

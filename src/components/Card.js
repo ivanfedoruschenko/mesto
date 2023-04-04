@@ -1,7 +1,4 @@
-import {imgFullSize, imgName, popupFullSizeImg} from "../utils/constants.js";
-import {openPopup} from "../scripts";
-
-class Card {
+export default class Card {
   constructor({data,handleCardClick}, template) {
     this._title = data.title;
     this._link = data.link;
@@ -27,7 +24,6 @@ class Card {
 
   _handleLikeClick() { //метод для активации лайка
    this._buttonLike.classList.toggle('element__like_active');
-
   };
 
   _handleCardDelete() { //метод для удаления карточки
@@ -40,5 +36,3 @@ class Card {
     this._element.querySelector(".element__img").addEventListener("click", () =>{this._handleCardClick()})
   }
 }
-
-export {Card}
