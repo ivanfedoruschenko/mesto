@@ -26,13 +26,13 @@ const popupAddCardValidation = new FormValidator(parameters, popupCreateCard)
 popupAddCardValidation.enableValidation()
 
 const popupFullImg = new PopupWithImage(popupFullSizeImg)
+popupFullImg.setEventListeners()
 
 function createCard(cardData) {
   const card = new Card({
     data: cardData,
     handleCardClick: () =>{
       popupFullImg.open(cardData)
-      popupFullImg.setEventListeners()
     }}, cardTemplate)
   return card.generateCard()
 }
@@ -58,11 +58,7 @@ const userInfo = new UserInfo({
 
 const popupUserInfo = new PopupWithForm(popupEditProfile, {
   handleFormSubmit: (element) => {
-    const newUserInfo = new UserInfo({
-      userName: profileName,
-      userInfo: profileInfo})
-
-    newUserInfo.setUserInfo(element)
+    userInfo.setUserInfo(element)
   }
 })
 
