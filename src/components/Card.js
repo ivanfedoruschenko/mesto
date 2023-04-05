@@ -1,6 +1,6 @@
 export default class Card {
   constructor({data,handleCardClick}, template) {
-    this._title = data.title;
+    this._name = data.name;
     this._link = data.link;
     this._handleCardClick = handleCardClick
     this._template = template;
@@ -15,9 +15,9 @@ export default class Card {
   generateCard() {
     const newElementImg = this._element.querySelector('.element__img') ;// наполняем содержимым
     newElementImg.src = this._link;
-    newElementImg.alt = this._title;
+    newElementImg.alt = this._name;
     const newElementName = this._element.querySelector('.element__name');
-    newElementName.textContent = this._title;
+    newElementName.textContent = this._name;
     this._setEventListener()
     return this._element
   }

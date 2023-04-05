@@ -25,56 +25,60 @@ popupEditProfileValidation.enableValidation()
 const popupAddCardValidation = new FormValidator(parameters, popupCreateCard)
 popupAddCardValidation.enableValidation()
 
+const popupFullImg = new PopupWithImage(popupFullSizeImg)
+
+function createCard(cardData) {
+  const card = new Card({
+    data: cardData,
+    handleCardClick: () =>{
+      popupFullImg.open(cardData)
+      popupFullImg.setEventListeners()
+    }}, cardTemplate)
+  return card.generateCard()
+}
+
 const cardList = new Section({
   data: initialCards,
   renderer: (cardItem) => {
-    const card = new Card({
-        data: cardItem,
-      handleCardClick: () =>{
-        const popupFullImg = new PopupWithImage(popupFullSizeImg, cardItem)
-        popupFullImg.open()
-      }},
-      cardTemplate);
-    const cardElement =card.generateCard()
-    cardList.addItem(cardElement)
+   const newCard = createCard(cardItem)
+    cardList.addItem(newCard)
   }
 },".elements" )
 
 const popupAddCard = new PopupWithForm(popupCreateCard, {
     handleFormSubmit: (formData) => {
-    const card = new Card({
-        data: formData,
-        handleCardClick: () =>{
-          const popupFullImg = new PopupWithImage(popupFullSizeImg, formData)
-          popupFullImg.open()
-        }},
-      cardTemplate);
-    const cardElement =card.generateCard()
-    cardList.addItem(cardElement)
-  }
-});
+      const cardElement = createCard(formData)
+      cardList.addItem(cardElement)
+      },
+  });
 
 const userInfo = new UserInfo({
-  selectorUserName: profileName,
-  selectorUserInfo: profileInfo})
+  userName: profileName,
+  userInfo: profileInfo})
 
 const popupUserInfo = new PopupWithForm(popupEditProfile, {
   handleFormSubmit: (element) => {
     const newUserInfo = new UserInfo({
-      selectorUserName: profileName,
-      selectorUserInfo: profileInfo})
+      userName: profileName,
+      userInfo: profileInfo})
 
     newUserInfo.setUserInfo(element)
   }
 })
 
 cardList.renderItems()
+popupAddCard.setEventListeners()
+popupUserInfo.setEventListeners()
+
 
 buttonAddCard.addEventListener("click",() => {
   popupAddCard.open()
+  popupAddCardValidation.resetValidation()
 });
 buttonEditProfile.addEventListener("click", () => {
-  nameInput.value = userInfo.getUserInfo().name;
+  nameInput.value = userInfo.getUserInfo().user;
   jobInput.value = userInfo.getUserInfo().info;
+  popupEditProfileValidation.resetValidation()
   popupUserInfo.open()
 });
+
