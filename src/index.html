@@ -16,7 +16,7 @@
     <section class="profile">
       <div class="profile__two-columns">
         <div class="profile__container">
-          <img src="<%=require('./images/profile__avatar.png')%>" alt="Аватар" class="profile__avatar">
+          <img src="#" alt="Аватар" class="profile__avatar">
           <div class="profile__name-info">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
             <p class="profile__info">Исследователь океана</p>
@@ -35,7 +35,10 @@
           <img class="element__img" src="#" alt="">
           <div class="element__name-like">
             <h2 class="element__name"></h2>
-            <button type="button" class="element__like"></button>
+            <div class="element__container">
+              <button type="button" class="element__like"></button>
+              <span class="element__like-number"></span>
+            </div>
           </div>
         </div>
       </template>
@@ -53,11 +56,11 @@
       <h2 class="popup__title">Редактировать профиль</h2>
       <form class="popup__form" name="popup__form" novalidate>
         <label class="popup__label">
-          <input id="name-edit-input" type="text" placeholder="Введите свое имя" class="popup__input popup__input_type_name" name="user" value="" minlength="2" maxlength="40" required>
+          <input id="name-edit-input" type="text" placeholder="Введите свое имя" class="popup__input popup__input_type_name" name="name" value="" minlength="2" maxlength="40" required>
           <span class="name-edit-input-error popup__input-error"></span>
         </label>
         <label class="popup__label">
-          <input id="info-edit-input" type="text" placeholder="Укажите информацию о себе" class="popup__input popup__input_type_info" name="info" minlength="2" maxlength="200" required>
+          <input id="info-edit-input" type="text" placeholder="Укажите информацию о себе" class="popup__input popup__input_type_info" name="about" minlength="2" maxlength="200" required>
           <span class="info-edit-input-error popup__input-error"></span>
         </label>
         <button type="submit" class="popup__button" name="popup__button">Сохранить</button>
@@ -88,6 +91,14 @@
       <img class="popup__img popup__img_full-size" src="#" alt="">
       <button type="button" class="blackout popup__close"></button>
       <p class="popup__img-name"></p>
+    </div>
+  </div>
+
+  <div class="popup  popup_delete-card">
+    <div class="popup__container popup__container_width popup__container_remove">
+      <h2 class="popup__title">Вы уверены?</h2>
+      <button type="submit" class="popup__button popup__button_remove" name="popup__button">Да</button>
+      <button type="button" class="blackout popup__close"></button>
     </div>
   </div>
 </body>
