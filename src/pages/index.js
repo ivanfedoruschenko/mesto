@@ -20,6 +20,7 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
 import Api from "../components/Api.js";
 import PopupWithSubmit from "../components/PopupWithSubmit";
+import {logPlugin} from "@babel/preset-env/lib/debug";
 
 const popupEditProfileValidation = new FormValidator(parameters, popupEditProfile)
 popupEditProfileValidation.enableValidation()
@@ -57,15 +58,19 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     function createCard(cards) {
       const card = new Card(
         {
-          data: {
-            name: cards.name,
-            link:cards.link,
-            ownerId:cards.owner._id,
-            cardId:cards._id,
-            likes:cards.likes,
-            userId: userId
-          },
+          data: cards,
+          user: userId,
           handleCardLike: () =>{
+            if(card.isLiked()){
+              api.deactivateLike(cards)
+                .then(res => {
+                  card.setLikes(res.likes)})
+            }
+            else{
+              api.activateLike(cards)
+                .then(res => {
+                  card.setLikes(res.likes)})
+            }
           },
           handleCardClick: () =>{
           },
@@ -73,7 +78,10 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
           }
         },
         cardTemplate)
+      card.toggleLike()
+     return card.generateCard()
     }
+
 
     const cardList = new Section({
       data:cards,
@@ -83,25 +91,43 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
       }
     },".elements" )
     cardList.renderItems()
+
+    const popupAddCard = new PopupWithForm(popupCreateCard, {
+      handleFormSubmit: (formData) => {
+        api.postNewCard(formData)
+          .then(res => {
+            cardList.renderItems(res)
+          })
+      },
+    });
+
+    const popupCardDelete = new PopupWithSubmit(popupDeleteCard,{
+      handleSubmit: () => {
+      }
+    })
+
+    buttonAddCard.addEventListener("click",() => {
+      popupAddCard.open()
+      popupAddCard.setEventListeners()
+      popupAddCardValidation.resetValidation()
+    });
+
+    buttonEditProfile.addEventListener("click", () => {
+      nameInput.value = userInfo.getUserInfo().name;
+      jobInput.value = userInfo.getUserInfo().about;
+      popupEditProfileValidation.resetValidation()
+      popupUserInfo.open()
+    });
+
+
+    popupCardDelete.setEventListeners()
+
+
   })
   .then(res => {
 
     }
   )
-
-/*const popupAddCard = new PopupWithForm(popupCreateCard, {
-    handleFormSubmit: (formData) => {
-      api.postNewCard(formData)
-        .then(res => {
-          cardList.renderItems(res)
-        })
-      },
-  });*/
-
-const popupCardDelete = new PopupWithSubmit(popupDeleteCard,{
-  handleSubmit: () => {
-  }
-})
 
 const userInfo = new UserInfo({
   userName: profileName,
@@ -118,21 +144,8 @@ const popupUserInfo = new PopupWithForm(popupEditProfile, {
   }
 })
 
-/*
-popupAddCard.setEventListeners()
 popupUserInfo.setEventListeners()
-popupCardDelete.setEventListeners()
 
-buttonAddCard.addEventListener("click",() => {
-  popupAddCard.open()
-  popupAddCardValidation.resetValidation()
-});
 
-buttonEditProfile.addEventListener("click", () => {
-  nameInput.value = userInfo.getUserInfo().name;
-  jobInput.value = userInfo.getUserInfo().about;
-  popupEditProfileValidation.resetValidation()
-  popupUserInfo.open()
-});
-*/
+
 
