@@ -11,7 +11,7 @@ import {
   popupEditProfile, popupFullSizeImg,
   profileInfo,
   profileName,
-  popupDeleteCard
+  popupDeleteCard, elements
 } from "../utils/constants.js"
 import Section from "../components/Section.js";
 import {FormValidator} from "../components/FormValidator.js";
@@ -75,6 +75,13 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
           handleCardClick: () =>{
           },
           handleCardDelete: () => {
+            popupCardDelete.open()
+            popupCardDelete.updateHandleSubmit(() => {
+              api.deleteCard(cards)
+                .then(res => {
+                })
+            })
+            popupCardDelete.setEventListeners()
           }
         },
         cardTemplate)
@@ -96,15 +103,14 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
       handleFormSubmit: (formData) => {
         api.postNewCard(formData)
           .then(res => {
-            cardList.renderItems(res)
+            popupAddCard.setEventListeners()
+            cardList.renderItems()
           })
+
       },
     });
 
-    const popupCardDelete = new PopupWithSubmit(popupDeleteCard,{
-      handleSubmit: () => {
-      }
-    })
+    const popupCardDelete = new PopupWithSubmit(popupDeleteCard)
 
     buttonAddCard.addEventListener("click",() => {
       popupAddCard.open()
@@ -118,10 +124,6 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
       popupEditProfileValidation.resetValidation()
       popupUserInfo.open()
     });
-
-
-    popupCardDelete.setEventListeners()
-
 
   })
   .then(res => {

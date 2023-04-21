@@ -1,10 +1,14 @@
 import Popup from "./Popup.js";
 
 export default class PopupWithSubmit extends Popup{
-  constructor(popup,{handleSubmit}) {
+  constructor(popup) {
     super(popup);
-    this._handleSubmit = handleSubmit
-    this._element = this._popup.querySelector(".popup_delete-card")
+
+    this._element = this._popup.querySelector(".popup__submit")
+  }
+
+  updateHandleSubmit(fn){
+    this._handleSubmit = fn
   }
 
   setEventListeners() {

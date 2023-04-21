@@ -42,14 +42,13 @@ export default class Card {
 
   }
 
-
   generateCard() {
     const newElementImg = this._element.querySelector('.element__img') ;// наполняем содержимым
     newElementImg.src = this._link;
     newElementImg.alt = this._name;
     const newElementName = this._element.querySelector('.element__name');
     newElementName.textContent = this._name;
-    if(this._ownerId !== this._user){  this._buttonTrash.classList.add("element__trash_hidden")}
+    if(this._ownerId === this._user){  this._buttonTrash.classList.add("element__trash_hidden")}
     if(this._likes.length !== 0){
       this._likesCounter.textContent = this._likes.length
     }
@@ -59,7 +58,6 @@ export default class Card {
     this._setEventListener()
     return this._element
   }
-
 
   _setEventListener(){
     this._buttonLike.addEventListener("click", () => {this._handleCardLike()}) //добавляем событие на кнопку лайка

@@ -43,7 +43,7 @@ export default class Api {
   }
 
   deleteCard(data){
-    return fetch(`${this._address}/cards/${id} `,
+    return fetch(`${this._address}/cards/${data._id} `,
       {
         method: "DELETE",
         headers: this._headers,

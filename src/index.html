@@ -94,10 +94,12 @@
     </div>
   </div>
 
-  <div class="popup  popup_delete-card">
+  <div class="popup popup_delete-card">
     <div class="popup__container popup__container_width popup__container_remove">
       <h2 class="popup__title">Вы уверены?</h2>
-      <button type="submit" class="popup__button popup__button_remove" name="popup__button">Да</button>
+      <form class="popup__submit" novalidate>
+        <button type="submit" class="popup__button popup__button_remove" name="popup__button">Да</button>
+      </form>
       <button type="button" class="blackout popup__close"></button>
     </div>
   </div>
