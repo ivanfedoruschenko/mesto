@@ -2,6 +2,7 @@ export default class Popup {
   constructor(popup) {
     this._popup = popup
     this._handleEscClose = this._handleEscClose.bind(this)
+    this._buttonSubmit = this._popup.querySelector(".popup__button")
   }
 
   open(){
@@ -19,6 +20,10 @@ export default class Popup {
         this.close()
       }
 
+  }
+
+  setButtonText(text) {
+    this._buttonSubmit.textContent = text
   }
 
   setEventListeners(){

@@ -10,6 +10,10 @@ export default class UserInfo {
     return this._inputValues;
   }
 
+  setAvatar(element){
+    this._avatar.src = element.avatar;
+  }
+
   setUserInfo(element) {
     this._userName.textContent = element.name;
     this._userInfo.textContent = element.about;

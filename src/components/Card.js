@@ -2,7 +2,7 @@ export default class Card {
   constructor({data, user, handleCardClick, handleCardDelete, handleCardLike}, template) {
     this._name = data.name;
     this._link = data.link;
-    this._ownerId = data.ownerId;
+    this._ownerId = data.owner._id;
     this._cardId = data.cardId;
     this._likes = data.likes;
     this._user = user;
@@ -23,7 +23,6 @@ export default class Card {
   setLikes(newLikes){
     this._likesCounter.textContent = newLikes.length;
     this._likes = newLikes;
-
     this.toggleLike()
   }
 
@@ -36,10 +35,19 @@ export default class Card {
     }
   }
 
+  removeCard(){
+    console.log(this._element)
+    this._element.remove()
+  }
+
   isLiked() {
     return this._likes.some((element) => {
       return element._id === this._user})
 
+  }
+
+  checkOwner(){
+    if(this._ownerId !== this._user){  this._buttonTrash.style.display="none"}
   }
 
   generateCard() {
@@ -48,7 +56,7 @@ export default class Card {
     newElementImg.alt = this._name;
     const newElementName = this._element.querySelector('.element__name');
     newElementName.textContent = this._name;
-    if(this._ownerId === this._user){  this._buttonTrash.classList.add("element__trash_hidden")}
+
     if(this._likes.length !== 0){
       this._likesCounter.textContent = this._likes.length
     }

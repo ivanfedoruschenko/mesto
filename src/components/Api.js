@@ -69,5 +69,14 @@ export default class Api {
       .then((res) => res.ok ? res.json() : Promise.reject(res.status));
   }
 
+  patchAvatar(data){
+    return fetch(`${this._address}/users/me/avatar`,
+      {
+        method: "PATCH",
+        body: JSON.stringify({avatar: data.link}),
+        headers: this._headers,
+      })
+      .then((res) => res.ok ? res.json() : Promise.reject(res.status));
+  }
 }
 

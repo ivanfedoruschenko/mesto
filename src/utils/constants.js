@@ -11,6 +11,8 @@ const popupCreateCard = document.querySelector(".popup_create_card");
 const popupFullSizeImg = document.querySelector(".popup_open-img");
 const elements =  document.querySelector(".elements");
 const popupDeleteCard = document.querySelector(".popup_delete-card")
+const popupUpdateAvatar = document.querySelector(".popup_patch_avatar");
+const buttonPatchAvatar = document.querySelector(".profile__avatar-container")
 
 const parameters = {
   formSelector: '.popup__form',
@@ -34,5 +36,7 @@ export {popupEditProfile,
   popupFullSizeImg,
   parameters,
   elements,
-  popupDeleteCard
+  popupDeleteCard,
+  popupUpdateAvatar,
+  buttonPatchAvatar
 }

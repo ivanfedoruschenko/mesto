@@ -11,7 +11,7 @@ import {
   popupEditProfile, popupFullSizeImg,
   profileInfo,
   profileName,
-  popupDeleteCard, elements
+  popupDeleteCard, elements, popupUpdateAvatar, buttonPatchAvatar
 } from "../utils/constants.js"
 import Section from "../components/Section.js";
 import {FormValidator} from "../components/FormValidator.js";
@@ -27,6 +27,9 @@ popupEditProfileValidation.enableValidation()
 
 const popupAddCardValidation = new FormValidator(parameters, popupCreateCard)
 popupAddCardValidation.enableValidation()
+
+const popupPatchAvatarValidation= new FormValidator(parameters, popupUpdateAvatar)
+popupPatchAvatarValidation.enableValidation()
 
 const popupFullImg = new PopupWithImage(popupFullSizeImg)
 popupFullImg.setEventListeners()
@@ -50,7 +53,6 @@ api.getInitialCards()
   })
   .catch((error) => console.log(`Ошибка: ${error}`))
 
-
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then(([userData, cards]) => {
     let userId = userData._id
@@ -73,12 +75,15 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
             }
           },
           handleCardClick: () =>{
-          },
+              popupFullImg.open(cards)
+            },
           handleCardDelete: () => {
             popupCardDelete.open()
             popupCardDelete.updateHandleSubmit(() => {
+              popupCardDelete.setButtonText("Удаление...")
               api.deleteCard(cards)
                 .then(res => {
+                  card.removeCard()
                 })
             })
             popupCardDelete.setEventListeners()
@@ -86,9 +91,9 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
         },
         cardTemplate)
       card.toggleLike()
+      card.checkOwner()
      return card.generateCard()
     }
-
 
     const cardList = new Section({
       data:cards,
@@ -97,16 +102,18 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
         cardList.addItem(newCard)
       }
     },".elements" )
+
     cardList.renderItems()
 
     const popupAddCard = new PopupWithForm(popupCreateCard, {
       handleFormSubmit: (formData) => {
+        popupAddCard.setButtonText("Создание...")
         api.postNewCard(formData)
           .then(res => {
             popupAddCard.setEventListeners()
             cardList.renderItems()
+            cardList.addItem(createCard(res))
           })
-
       },
     });
 
@@ -125,11 +132,12 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
       popupUserInfo.open()
     });
 
-  })
-  .then(res => {
+    buttonPatchAvatar.addEventListener("click", () => {
+      popupPatchAvatarValidation.resetValidation()
+      popupPatchAvatar.open()
+    });
 
-    }
-  )
+  })
 
 const userInfo = new UserInfo({
   userName: profileName,
@@ -139,6 +147,7 @@ const userInfo = new UserInfo({
 
 const popupUserInfo = new PopupWithForm(popupEditProfile, {
   handleFormSubmit: (element) => {
+    popupUserInfo.setButtonText("Сохранение...")
     api.patchUserInfo(element)
       .then(res =>{
         userInfo.setUserInfo(res)
@@ -148,6 +157,14 @@ const popupUserInfo = new PopupWithForm(popupEditProfile, {
 
 popupUserInfo.setEventListeners()
 
-
-
-
+const popupPatchAvatar = new PopupWithForm(popupUpdateAvatar, {
+  handleFormSubmit: (element) =>{
+    console.log(element)
+    popupPatchAvatar.setButtonText('Сохранение...')
+    api.patchAvatar(element)
+      .then(res =>{
+        userInfo.setAvatar(res)
+      })
+  }
+})
+popupPatchAvatar.setEventListeners()
