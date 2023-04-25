@@ -42,20 +42,10 @@ const api = new Api({
   }
 })
 
-api.getUserInfo()
-  .then(res => {
-    userInfo.setUserInfo(res)
-})
-  .catch((error) => console.log(`Ошибка: ${error}`))
-
-api.getInitialCards()
-  .then(res => {
-  })
-  .catch((error) => console.log(`Ошибка: ${error}`))
-
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then(([userData, cards]) => {
-    let userId = userData._id
+    const userId = userData._id
+    userInfo.setUserInfo(userData)
 
     function createCard(cards) {
       const card = new Card(
@@ -67,24 +57,33 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
               api.deactivateLike(cards)
                 .then(res => {
                   card.setLikes(res.likes)})
+                .catch((error) => console.log(`Ошибка: ${error}`))
             }
             else{
               api.activateLike(cards)
                 .then(res => {
                   card.setLikes(res.likes)})
+                .catch((error) => console.log(`Ошибка: ${error}`))
             }
           },
           handleCardClick: () =>{
               popupFullImg.open(cards)
             },
           handleCardDelete: () => {
+            popupCardDelete.setButtonText("Да")
             popupCardDelete.open()
             popupCardDelete.updateHandleSubmit(() => {
-              popupCardDelete.setButtonText("Удаление...")
               api.deleteCard(cards)
                 .then(res => {
                   card.removeCard()
                 })
+                .then(res => {
+                  popupCardDelete.close()
+                })
+                .catch((error) => console.log(`Ошибка: ${error}`))
+                .finally(() => {
+                  popupCardDelete.setButtonText("Удаление...")
+                });
             })
             popupCardDelete.setEventListeners()
           }
@@ -96,44 +95,53 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     }
 
     const cardList = new Section({
-      data:cards,
       renderer: (cardItem) => {
         const newCard = createCard(cardItem)
         cardList.addItem(newCard)
       }
     },".elements" )
 
-    cardList.renderItems()
+    cardList.renderItems(cards)
 
     const popupAddCard = new PopupWithForm(popupCreateCard, {
       handleFormSubmit: (formData) => {
-        popupAddCard.setButtonText("Создание...")
         api.postNewCard(formData)
           .then(res => {
-            popupAddCard.setEventListeners()
-            cardList.renderItems()
             cardList.addItem(createCard(res))
           })
+          .then(res => {
+            popupAddCard.close()
+          })
+          .catch((error) => console.log(`Ошибка: ${error}`))
+          .finally(() => {
+            popupAddCard.setButtonText("Создание...")
+          });
       },
     });
 
+    popupAddCard.setEventListeners()
+
     const popupCardDelete = new PopupWithSubmit(popupDeleteCard)
 
+    const userInformation = userInfo.getUserInfo();
+
     buttonAddCard.addEventListener("click",() => {
+      popupAddCard.setButtonText("Создать")
       popupAddCard.open()
-      popupAddCard.setEventListeners()
       popupAddCardValidation.resetValidation()
     });
 
     buttonEditProfile.addEventListener("click", () => {
-      nameInput.value = userInfo.getUserInfo().name;
-      jobInput.value = userInfo.getUserInfo().about;
+      nameInput.value = userInformation.name;
+      jobInput.value = userInformation.about;
+      popupUserInfo.setButtonText("Сохранить")
       popupEditProfileValidation.resetValidation()
       popupUserInfo.open()
     });
 
     buttonPatchAvatar.addEventListener("click", () => {
       popupPatchAvatarValidation.resetValidation()
+      popupPatchAvatar.setButtonText("Сохранить")
       popupPatchAvatar.open()
     });
 
@@ -147,11 +155,17 @@ const userInfo = new UserInfo({
 
 const popupUserInfo = new PopupWithForm(popupEditProfile, {
   handleFormSubmit: (element) => {
-    popupUserInfo.setButtonText("Сохранение...")
     api.patchUserInfo(element)
       .then(res =>{
         userInfo.setUserInfo(res)
       })
+      .then(res => {
+        popupUserInfo.close()
+      })
+      .catch((error) => console.log(`Ошибка: ${error}`))
+      .finally(() => {
+        popupUserInfo.setButtonText("Сохранение...")
+      });
   }
 })
 
@@ -159,12 +173,17 @@ popupUserInfo.setEventListeners()
 
 const popupPatchAvatar = new PopupWithForm(popupUpdateAvatar, {
   handleFormSubmit: (element) =>{
-    console.log(element)
-    popupPatchAvatar.setButtonText('Сохранение...')
     api.patchAvatar(element)
       .then(res =>{
         userInfo.setAvatar(res)
       })
+      .then(res => {
+        popupPatchAvatar.close()
+      })
+      .catch((error) => console.log(`Ошибка: ${error}`))
+      .finally(() => {
+        popupPatchAvatar.setButtonText('Сохранение...')
+      });
   }
 })
 popupPatchAvatar.setEventListeners()

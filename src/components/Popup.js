@@ -19,7 +19,6 @@ export default class Popup {
       if (evt.key === "Escape") {
         this.close()
       }
-
   }
 
   setButtonText(text) {

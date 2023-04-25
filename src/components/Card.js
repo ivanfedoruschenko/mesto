@@ -36,14 +36,12 @@ export default class Card {
   }
 
   removeCard(){
-    console.log(this._element)
     this._element.remove()
   }
 
   isLiked() {
     return this._likes.some((element) => {
       return element._id === this._user})
-
   }
 
   checkOwner(){
