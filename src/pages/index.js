@@ -73,6 +73,7 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
             popupCardDelete.setButtonText("Да")
             popupCardDelete.open()
             popupCardDelete.updateHandleSubmit(() => {
+              popupCardDelete.setButtonText("Удаление...")
               api.deleteCard(cards)
                 .then(res => {
                   card.removeCard()
@@ -82,7 +83,7 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
                 })
                 .catch((error) => console.log(`Ошибка: ${error}`))
                 .finally(() => {
-                  popupCardDelete.setButtonText("Удаление...")
+                  popupCardDelete.setButtonText("Да")
                 });
             })
             popupCardDelete.setEventListeners()
@@ -105,6 +106,7 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
 
     const popupAddCard = new PopupWithForm(popupCreateCard, {
       handleFormSubmit: (formData) => {
+        popupAddCard.setButtonText("Создание...")
         api.postNewCard(formData)
           .then(res => {
             cardList.addItem(createCard(res))
@@ -114,7 +116,7 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
           })
           .catch((error) => console.log(`Ошибка: ${error}`))
           .finally(() => {
-            popupAddCard.setButtonText("Создание...")
+            popupAddCard.setButtonText("Создать")
           });
       },
     });
@@ -126,7 +128,6 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     const userInformation = userInfo.getUserInfo();
 
     buttonAddCard.addEventListener("click",() => {
-      popupAddCard.setButtonText("Создать")
       popupAddCard.open()
       popupAddCardValidation.resetValidation()
     });
@@ -134,17 +135,14 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     buttonEditProfile.addEventListener("click", () => {
       nameInput.value = userInformation.name;
       jobInput.value = userInformation.about;
-      popupUserInfo.setButtonText("Сохранить")
       popupEditProfileValidation.resetValidation()
       popupUserInfo.open()
     });
 
     buttonPatchAvatar.addEventListener("click", () => {
       popupPatchAvatarValidation.resetValidation()
-      popupPatchAvatar.setButtonText("Сохранить")
       popupPatchAvatar.open()
     });
-
   })
 
 const userInfo = new UserInfo({
@@ -155,6 +153,7 @@ const userInfo = new UserInfo({
 
 const popupUserInfo = new PopupWithForm(popupEditProfile, {
   handleFormSubmit: (element) => {
+    popupUserInfo.setButtonText("Сохранение...")
     api.patchUserInfo(element)
       .then(res =>{
         userInfo.setUserInfo(res)
@@ -164,7 +163,7 @@ const popupUserInfo = new PopupWithForm(popupEditProfile, {
       })
       .catch((error) => console.log(`Ошибка: ${error}`))
       .finally(() => {
-        popupUserInfo.setButtonText("Сохранение...")
+        popupUserInfo.setButtonText("Сохранить")
       });
   }
 })
@@ -173,6 +172,7 @@ popupUserInfo.setEventListeners()
 
 const popupPatchAvatar = new PopupWithForm(popupUpdateAvatar, {
   handleFormSubmit: (element) =>{
+    popupPatchAvatar.setButtonText('Сохранение...')
     api.patchAvatar(element)
       .then(res =>{
         userInfo.setAvatar(res)
@@ -182,7 +182,7 @@ const popupPatchAvatar = new PopupWithForm(popupUpdateAvatar, {
       })
       .catch((error) => console.log(`Ошибка: ${error}`))
       .finally(() => {
-        popupPatchAvatar.setButtonText('Сохранение...')
+        popupPatchAvatar.setButtonText('Сохранить')
       });
   }
 })
