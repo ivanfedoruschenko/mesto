@@ -62,6 +62,7 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
             else{
               api.activateLike(cards)
                 .then(res => {
+                  console.log(res)
                   card.setLikes(res.likes)})
                 .catch((error) => console.log(`Ошибка: ${error}`))
             }
